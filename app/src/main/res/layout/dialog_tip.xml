@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/tipdialog_container"
+    android:orientation="vertical" >
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dip"
+        android:background="@drawable/bg_tipdialog_top" />
+
+    <TextView
+        android:id="@+id/txt_title"
+        style="@style/tipdialog_title"
+        android:text="@string/company" />
+
+    <View style="@style/line_tip_dialog" />
+
+    <TextView
+        android:id="@+id/txt_content"
+        style="@style/tipdialog_content"
+        android:text="@string/app_name" />
+
+    <LinearLayout
+        style="@style/tipdialog_btns_container"
+        android:orientation="horizontal"
+        android:paddingBottom="15dip"
+        android:paddingLeft="20dip"
+        android:paddingRight="20dip" >
+
+        <Button
+            android:id="@+id/btn_cancel"
+            style="@style/tipdialog_btn"
+            android:layout_marginRight="15dip"
+            android:background="@drawable/bg_btn_dialog_cancle"
+            android:text="@string/global_cancel"
+            android:textColor="@drawable/text_tipdialog_cancel" />
+
+        <Button
+            android:id="@+id/btn_confirm"
+            style="@style/tipdialog_btn"
+            android:layout_marginLeft="15dip"
+            android:background="@drawable/bg_btn_save_portrait"
+            android:text="@string/sure"
+            android:textColor="@drawable/text_tipdialog_cancel" />
+    </LinearLayout>
+
+</LinearLayout>
