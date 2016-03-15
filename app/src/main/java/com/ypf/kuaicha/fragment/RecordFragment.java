@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -91,7 +92,7 @@ public class RecordFragment extends Fragment implements AdapterView.OnItemClickL
         Result result1 = results.get(position);
         if (result1.getStatus() == 1) {
             String s = PreferenceHelper.ins().getStringShareData(result1.getNo(), "");
-            LogUtil.d("s=" + s);
+            Log.d("TAG", s);
             if (!TextUtils.isEmpty(s)) {
                 ResultRoot resultRoot = GsonTools.changeGsonToBean(s, ResultRoot.class);
                 Result result = resultRoot.getResult();
@@ -128,6 +129,7 @@ public class RecordFragment extends Fragment implements AdapterView.OnItemClickL
                         if (result.getStatus() == 1) {//无需更新
                             try {
                                 CompanyDao.updateResult(result);
+                                PreferenceHelper.ins().storeShareStringData(result.getNo(), s);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }

@@ -17,6 +17,7 @@ import java.util.ArrayList;
 public class TApplication extends Application {
     public static TApplication instance;
     public static ArrayList<Activity> activities = new ArrayList<>();
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -31,7 +32,8 @@ public class TApplication extends Application {
     public static TApplication getInstance() {
         return instance;
     }
-    public LayoutInflater getInflater(){
+
+    public LayoutInflater getInflater() {
         return LayoutInflater.from(instance);
     }
 }

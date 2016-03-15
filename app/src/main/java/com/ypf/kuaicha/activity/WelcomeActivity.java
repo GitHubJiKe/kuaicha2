@@ -10,6 +10,7 @@ import com.ypf.kuaicha.R;
 import com.ypf.kuaicha.TApplication;
 import com.ypf.kuaicha.util.FrescoUtil;
 import com.ypf.kuaicha.util.GotoActivityUtil;
+import com.ypf.kuaicha.util.StorageConfig;
 
 public class WelcomeActivity extends AppCompatActivity {
     private SimpleDraweeView mSimpleDraweeView;
@@ -19,6 +20,7 @@ public class WelcomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
+        StorageConfig.mkDirs();
         TApplication.activities.add(this);
         mSimpleDraweeView = (SimpleDraweeView) findViewById(R.id.mSimpleDraweeView);
         FrescoUtil.showGif(uri, mSimpleDraweeView);

@@ -21,6 +21,8 @@
     <string name="find">找回</string>
     <string name="postcompany">快递公司</string>
     <string name="noon">  </string>
+    <string name="savepic">截屏保存</string>
+    <string name="savepicing">截屏保存中……</string>
     <string name="errorcode">200</string>
     <string name="sorry">对不起，未获取到公司信息</string>
     <string name="sorry2">公司信息获取失败</string>
@@ -40,4 +42,5 @@
     <string name="searchfail">查询失败，请检查联网或输入</string>
     <string name="delete">删除</string>
     <string name="nodata">空空如也</string>
+    <string name="saveok">保存成功</string>
 </resources>

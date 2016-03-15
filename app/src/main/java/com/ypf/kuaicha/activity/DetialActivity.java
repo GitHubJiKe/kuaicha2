@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -15,9 +16,14 @@ import com.ypf.kuaicha.R;
 import com.ypf.kuaicha.TApplication;
 import com.ypf.kuaicha.adapter.DetialInfoAdapter;
 import com.ypf.kuaicha.bean.DetialInfo;
+import com.ypf.kuaicha.util.BitmapUtil;
+import com.ypf.kuaicha.util.ForeTask;
 import com.ypf.kuaicha.util.FrescoUtil;
+import com.ypf.kuaicha.util.StorageConfig;
 import com.ypf.kuaicha.util.StringUtil;
+import com.ypf.kuaicha.util.ToastUtil;
 
+import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
 
@@ -39,6 +45,7 @@ public class DetialActivity extends AppCompatActivity {
     private TextView txt_company;
     private TextView txt_number;
     private ListView listView;
+    private View relative3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +56,7 @@ public class DetialActivity extends AppCompatActivity {
     }
 
     private void initViews() {
+        relative3 = findViewById(R.id.relative3);
         String no = getIntent().getStringExtra("no");
         String com = getIntent().getStringExtra("com");
         String companyname = getIntent().getStringExtra("company");
@@ -66,7 +74,28 @@ public class DetialActivity extends AppCompatActivity {
         });
         btn_sure = (Button) findViewById(R.id.btn_sure);
         btn_sure.setVisibility(View.VISIBLE);
-        btn_sure.setText(StringUtil.getString(R.string.noon));
+        btn_sure.setText(StringUtil.getString(R.string.savepic));
+        btn_sure.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Bitmap mBitmap = getScreenShotsImage();
+                final String qrImagePath = StorageConfig.defaultImagePath + File.separator + String.valueOf(System.currentTimeMillis())
+                        + "qr.jpg";
+                new ForeTask() {
+                    @Override
+                    protected void runInBackground() {
+                        Log.d("TAG", "mbitmap.size = " + mBitmap.getByteCount());
+                        BitmapUtil.saveBitmapToDisk(qrImagePath, mBitmap);
+                        BitmapUtil.insertImageToPhotoAlbum(DetialActivity.this, qrImagePath);
+                    }
+
+                    @Override
+                    protected void runInForeground() {
+                        ToastUtil.showToast(R.string.saveok);
+                    }
+                }.execute();
+            }
+        });
         title = (TextView) findViewById(R.id.txt_title);
         title.setText(StringUtil.getString(R.string.detial));
         company = (SimpleDraweeView) findViewById(R.id.company);
@@ -115,5 +144,29 @@ public class DetialActivity extends AppCompatActivity {
                 break;
         }
         return url;
+    }
+
+    /**
+     * 获取截屏图像
+     *
+     * @return bitmap
+     */
+    private Bitmap getScreenShotsImage() {
+        try {
+            relative3.buildDrawingCache();
+            relative3.setDrawingCacheEnabled(true);
+            Bitmap screenShotImage = Bitmap.createBitmap(relative3.getDrawingCache(), 0, 0,
+                    relative3.getWidth(), relative3.getHeight());
+            // 销毁缓存信息
+            relative3.destroyDrawingCache();
+            Log.d("TAG", "byte == " + screenShotImage.getByteCount());
+            return screenShotImage;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        } catch (OutOfMemoryError error) {
+            error.printStackTrace();
+            return null;
+        }
     }
 }
