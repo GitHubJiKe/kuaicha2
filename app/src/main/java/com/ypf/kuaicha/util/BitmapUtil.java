@@ -874,13 +874,6 @@ public class BitmapUtil {
      * @param fileName 图片的本地位置
      */
     public static void insertImageToPhotoAlbum(Context context, String fileName) {
-        // try {
-        // MediaStore.Images.Media.insertImage(context.getContentResolver(),
-        // fileName, new File(fileName).getName(),
-        // new File(fileName).getName());
-        // } catch (FileNotFoundException e) {
-        // e.printStackTrace();
-        // }
         Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
         Uri uri = Uri.fromFile(new File(fileName));
         intent.setData(uri);
