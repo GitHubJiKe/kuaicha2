@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -46,8 +47,44 @@ public class LoginActivity extends AppCompatActivity implements TextWatcher, Che
         setContentView(R.layout.layout_login);
         TApplication.activities.add(this);
         initViews();
+        Log.d("TAG","onCreate");
     }
 
+    @Override
+    protected void onStart() {
+        Log.d("TAG","onStart");
+        super.onStart();
+    }
+
+    @Override
+    protected void onResume() {
+        Log.d("TAG","onResume");
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        Log.d("TAG","onPause");
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        Log.d("TAG","onStop");
+        super.onStop();
+    }
+
+    @Override
+    protected void onRestart() {
+        Log.d("TAG","onRestart");
+        super.onRestart();
+    }
+
+    @Override
+    protected void onDestroy() {
+        Log.d("TAG","onDestroy");
+        super.onDestroy();
+    }
     private void initViews() {
         edit_name = (EditText) findViewById(R.id.edit_name);
         edit_name.addTextChangedListener(this);
@@ -141,7 +178,6 @@ public class LoginActivity extends AppCompatActivity implements TextWatcher, Che
             case R.id.btn_register:
                 //注册
                 GotoActivityUtil.gotoRegisterActivity(LoginActivity.this);
-                finish();
                 break;
             case R.id.txt_yanzhengma:
                 txt_yanzhengma.setText(getRandomNumber());

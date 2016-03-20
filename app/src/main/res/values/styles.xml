@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowIsTranslucent">true</item>
     </style>
 
     <style name="CommonDialog" parent="@android:style/Theme.Dialog">
@@ -75,6 +76,7 @@
         <item name="android:layout_marginLeft">0dip</item>
         <item name="android:layout_marginRight">0dip</item>
     </style>
+
     <style name="dialog_loading">
         <item name="android:layout_width">300dip</item>
         <item name="android:layout_height">70dip</item>
@@ -82,6 +84,7 @@
         <item name="android:orientation">horizontal</item>
         <item name="android:background">@drawable/bg_room_userinfodialog</item>
     </style>
+
     <style name="CellTitle">
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">normal</item>

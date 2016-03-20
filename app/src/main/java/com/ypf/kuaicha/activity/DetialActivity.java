@@ -16,9 +16,11 @@ import com.ypf.kuaicha.R;
 import com.ypf.kuaicha.TApplication;
 import com.ypf.kuaicha.adapter.DetialInfoAdapter;
 import com.ypf.kuaicha.bean.DetialInfo;
+import com.ypf.kuaicha.dialog.TipDialog;
 import com.ypf.kuaicha.util.BitmapUtil;
 import com.ypf.kuaicha.util.ForeTask;
 import com.ypf.kuaicha.util.FrescoUtil;
+import com.ypf.kuaicha.util.ShareUtil;
 import com.ypf.kuaicha.util.StorageConfig;
 import com.ypf.kuaicha.util.StringUtil;
 import com.ypf.kuaicha.util.ToastUtil;
@@ -91,7 +93,29 @@ public class DetialActivity extends AppCompatActivity {
 
                     @Override
                     protected void runInForeground() {
-                        ToastUtil.showToast(R.string.saveok);
+                        final TipDialog tipDialog = new TipDialog(DetialActivity.this);
+                        tipDialog.setContent(StringUtil.getString(R.string.share));
+                        tipDialog.setTitle(StringUtil.getString(R.string.saveok));
+                        tipDialog.setLeftBtnText(StringUtil.getString(R.string.sure));
+                        tipDialog.setRightBtnText(StringUtil.getString(R.string.global_cancel));
+                        tipDialog.show();
+                        tipDialog.setOnBtnClickListener(new TipDialog.OnDialogBtnClickListener() {
+                            @Override
+                            public void onLeftBtnClicked(TipDialog dialog) {
+                                boolean toWXFriend = ShareUtil.shareToWXFriend(qrImagePath);
+                                if (toWXFriend) {
+                                    tipDialog.dismiss();
+                                } else {
+                                    ToastUtil.showToast(R.string.sharefail);
+                                    tipDialog.dismiss();
+                                }
+                            }
+
+                            @Override
+                            public void onRightBtnClicked(TipDialog dialog) {
+                                tipDialog.dismiss();
+                            }
+                        });
                     }
                 }.execute();
             }
@@ -168,5 +192,11 @@ public class DetialActivity extends AppCompatActivity {
             error.printStackTrace();
             return null;
         }
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        //this.overridePendingTransition(R.anim.out_anim, 0);
     }
 }

@@ -9,6 +9,7 @@ import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
@@ -156,6 +157,7 @@ public class CaptureActivity extends Activity implements Callback {
             saoMiaoOK.setSaoMiaoOK(true);
             saoMiaoOK.setResult(obj.getText());
             EventBus.getDefault().post(saoMiaoOK);
+            Log.d("TAG","扫描成功");
         }
         finish();
 

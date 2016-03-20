@@ -26,7 +26,6 @@ import com.ypf.kuaicha.util.ToastUtil;
 
 import org.xutils.common.util.LogUtil;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 
 import de.greenrobot.event.EventBus;
@@ -52,8 +51,7 @@ public class CompanyActivity extends AppCompatActivity implements View.OnClickLi
         title.setText(StringUtil.getString(R.string.postcompany));
         gridView = (GridView) findViewById(R.id.gridview);
         iv_back = (ImageButton) findViewById(R.id.ib_back);
-        InputStream is = getResources().openRawResource(R.raw.chat_back);
-        Bitmap mBitmap = BitmapFactory.decodeStream(is);
+        Bitmap mBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.chat_back);
         iv_back.setImageBitmap(mBitmap);
         iv_back.setVisibility(View.VISIBLE);
         iv_back.setOnClickListener(this);
@@ -112,5 +110,11 @@ public class CompanyActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onClick(View v) {
         finish();
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        //this.overridePendingTransition(R.anim.out_anim, 0);
     }
 }

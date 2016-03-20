@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,6 +52,7 @@ public class SearchFragment extends Fragment implements TextWatcher, CheckInput,
     private Button btn_search;
     private ImageButton iv_back;
     private String no;
+    private static String number = "";
     private static boolean hasRegister = false;
 
     @Nullable
@@ -94,9 +96,9 @@ public class SearchFragment extends Fragment implements TextWatcher, CheckInput,
                 } else {
                     if (NetWorkStateUtil.is3gConnected()) {
                         ToastUtil.showToast(R.string.threeg);
-                        GotoActivityUtil.gotoCompanyActivity(getContext());
+                        GotoActivityUtil.gotoCompanyActivity(getActivity());
                     } else if (NetWorkStateUtil.isWifiConnected()) {
-                        GotoActivityUtil.gotoCompanyActivity(getContext());
+                        GotoActivityUtil.gotoCompanyActivity(getActivity());
                     }
                 }
 
@@ -132,7 +134,7 @@ public class SearchFragment extends Fragment implements TextWatcher, CheckInput,
                         e.printStackTrace();
                     }
                     loadingDialog.dismiss();
-                    GotoActivityUtil.gotoDetialActivity(getContext(), result.getNo(), result.getCom(), list, result.getCompany());
+                    GotoActivityUtil.gotoDetialActivity(getActivity(), result.getNo(), result.getCom(), list, result.getCompany());
                     return;
                 }
                 HttpHelper.getHttpHelper().getInfo(new DataCallBack() {
@@ -168,7 +170,7 @@ public class SearchFragment extends Fragment implements TextWatcher, CheckInput,
                                 e.printStackTrace();
                             }
                             loadingDialog.dismiss();
-                            GotoActivityUtil.gotoDetialActivity(getContext(), result.getNo(), result.getCom(), list, result.getCompany());
+                            GotoActivityUtil.gotoDetialActivity(getActivity(), result.getNo(), result.getCom(), list, result.getCompany());
                         } else {
                             ToastUtil.showToast(R.string.sorry3);
                         }
@@ -239,12 +241,22 @@ public class SearchFragment extends Fragment implements TextWatcher, CheckInput,
     }
 
     public void onEventMainThread(SaoMiaoOK saoMiaoOK) {
+        Log.d("TAG", "接受扫面结果= " + saoMiaoOK);
         if (saoMiaoOK != null) {
             if (saoMiaoOK.isSaoMiaoOK()) {
-                edit_number.setText(saoMiaoOK.getResult());
+                number = saoMiaoOK.getResult().toString();
+                Log.d("TAG", "number1=" + number);
             }
 
         }
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        Log.d("TAG", "number1=" + number);
+        edit_number.setText(number);
+        number = "";
+        super.onViewStateRestored(savedInstanceState);
     }
 
     @Override

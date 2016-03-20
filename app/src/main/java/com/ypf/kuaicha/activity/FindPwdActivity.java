@@ -59,6 +59,13 @@ public class FindPwdActivity extends AppCompatActivity implements View.OnClickLi
         btn_find = (Button) findViewById(R.id.btn_find);
         btn_find.setOnClickListener(this);
         txt_pwd = (TextView) findViewById(R.id.txt_pwd);
+        txt_pwd.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                ToastUtil.addToClipboardWithoutToast(FindPwdActivity.this, ((TextView) v).getText().toString());
+                return true;
+            }
+        });
     }
 
     private String getName() {
@@ -86,7 +93,7 @@ public class FindPwdActivity extends AppCompatActivity implements View.OnClickLi
                         txt_pwd.setText(user.getPassword());
                         txt_pwd.setVisibility(View.VISIBLE);
                         btn_find.setEnabled(false);
-                    }else {
+                    } else {
                         ToastUtil.showToast(R.string.nobody);
                     }
                 } catch (Exception e) {
@@ -122,6 +129,12 @@ public class FindPwdActivity extends AppCompatActivity implements View.OnClickLi
         }
         LogUtil.d("s=" + s);
         btn_find.setEnabled(!checkInput());
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        //this.overridePendingTransition(R.anim.out_anim, 0);
     }
 
     private boolean checkInput() {

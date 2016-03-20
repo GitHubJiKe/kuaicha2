@@ -97,7 +97,7 @@ public class RecordFragment extends Fragment implements AdapterView.OnItemClickL
                 ResultRoot resultRoot = GsonTools.changeGsonToBean(s, ResultRoot.class);
                 Result result = resultRoot.getResult();
                 ArrayList<DetialInfo> list = result.getList();
-                GotoActivityUtil.gotoDetialActivity(getContext(), result.getNo(), result.getCom(), list, result.getCompany());
+                GotoActivityUtil.gotoDetialActivity(getActivity(), result.getNo(), result.getCom(), list, result.getCompany());
                 return;
             }
         } else {
@@ -150,7 +150,7 @@ public class RecordFragment extends Fragment implements AdapterView.OnItemClickL
                             e.printStackTrace();
                         }
                         loadingDialog.dismiss();
-                        GotoActivityUtil.gotoDetialActivity(getContext(), result.getNo(), result.getCom(), list, result.getCompany());
+                        GotoActivityUtil.gotoDetialActivity(getActivity(), result.getNo(), result.getCom(), list, result.getCompany());
                     } else {
                         ToastUtil.showToast(R.string.noinfo);
                     }

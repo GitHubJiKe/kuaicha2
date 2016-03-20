@@ -63,7 +63,6 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:gravity="center"
-                android:text="@string/find"
                 android:textSize="20sp"
                 android:visibility="invisible" />
 

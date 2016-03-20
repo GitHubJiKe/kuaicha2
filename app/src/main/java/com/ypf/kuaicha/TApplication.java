@@ -5,6 +5,8 @@ import android.app.Application;
 import android.view.LayoutInflater;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.thinkland.sdk.android.JuheSDKInitializer;
 
 import org.xutils.x;
@@ -17,11 +19,15 @@ import java.util.ArrayList;
 public class TApplication extends Application {
     public static TApplication instance;
     public static ArrayList<Activity> activities = new ArrayList<>();
+    private static final String APP_ID = "wx888888888888";
+    public static IWXAPI mApi;
 
     @Override
     public void onCreate() {
         super.onCreate();
         instance = this;
+        mApi = WXAPIFactory.createWXAPI(this, APP_ID);
+        mApi.registerApp(APP_ID);
         Fresco.initialize(getApplicationContext());
         //SDKInitializer.initialize(getApplicationContext());
         JuheSDKInitializer.initialize(getApplicationContext());

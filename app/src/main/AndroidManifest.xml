@@ -41,18 +41,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <!-- 地图开发所有的key与证书相关， -->
-        <!--<meta-data-->
-        <!--android:name="com.baidu.lbsapi.API_KEY"-->
-        <!--android:value="ZS2IHTKcXbYxwWGo9z0AOOra" />-->
         <meta-data
             android:name="com.thinkland.juheapi.openid"
             android:value="JH81c55e48a2b35aa203d00b2bb16b565c" />
-
-        <!--<service-->
-        <!--android:name="com.baidu.location.f"-->
-        <!--android:enabled="true"-->
-        <!--android:process=":remote" />-->
 
         <receiver
             android:name=".util.ConnectionChangeReceiver"
@@ -74,12 +65,15 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.LoginActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.RegisterActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.FindPwdActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.CompanyActivity"

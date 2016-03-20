@@ -178,6 +178,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
     @Override
+    public void finish() {
+        super.finish();
+        //this.overridePendingTransition(R.anim.out_anim, 0);
+    }
+
+    @Override
     protected void onDestroy() {
         EventBus.getDefault().unregister(this);
         super.onDestroy();
