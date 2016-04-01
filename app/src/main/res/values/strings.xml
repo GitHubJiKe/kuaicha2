@@ -43,9 +43,15 @@
     <string name="delete">删除</string>
     <string name="nodata">空空如也</string>
     <string name="saveok">保存成功</string>
+    <string name="moreknow">推荐给更多人</string>
     <string name="myinfor">我的快递信息</string>
     <string name="nopic">没有此图片</string>
     <string name="share">分享朋友圈</string>
+    <string name="sharetofri">发送给好友</string>
     <string name="sharefail">分享朋友圈失败</string>
     <string name="copy">已复制到粘贴板</string>
+    <string name="longclick">长按文本复制到粘贴板</string>
+    <string name="tips">提示</string>
+    <string name="know">知道了</string>
+    <string name="support">支持一下</string>
 </resources>

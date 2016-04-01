@@ -3,6 +3,7 @@ package com.ypf.kuaicha.activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -18,8 +19,13 @@ import com.ypf.kuaicha.R;
 import com.ypf.kuaicha.TApplication;
 import com.ypf.kuaicha.bean.User;
 import com.ypf.kuaicha.bean.UserDao;
+import com.ypf.kuaicha.util.PreferenceHelper;
 import com.ypf.kuaicha.util.StringUtil;
 import com.ypf.kuaicha.util.ToastUtil;
+
+import net.frederico.showtipsview.ShowTipsBuilder;
+import net.frederico.showtipsview.ShowTipsView;
+import net.frederico.showtipsview.ShowTipsViewInterface;
 
 import org.xutils.common.util.LogUtil;
 
@@ -32,7 +38,9 @@ public class FindPwdActivity extends AppCompatActivity implements View.OnClickLi
     private EditText edit_name;
     private Button btn_find;
     private TextView txt_pwd;
+    private ShowTipsView showTipsView;
     public static final int FIND = 1101;
+    public static final String FIRSTFIND = "firstfind";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +74,23 @@ public class FindPwdActivity extends AppCompatActivity implements View.OnClickLi
                 return true;
             }
         });
+        showTipsView = new ShowTipsBuilder(this)
+                .setTarget(txt_pwd)
+                .setTitle(StringUtil.getString(R.string.tips))
+                .setTitleColor(Color.RED)
+                .setBackgroundColor(Color.BLACK)
+                .setDescription(StringUtil.getString(R.string.longclick))
+                .setDescriptionColor(Color.WHITE)
+                .setDelay(1000)
+                .setButtonText(StringUtil.getString(R.string.know))
+                .setCloseButtonTextColor(Color.BLACK)
+                .setBackgroundAlpha(100)
+                .build();
+        showTipsView.setCallback(new ShowTipsViewInterface() {
+            @Override
+            public void gotItClicked() {
+            }
+        });
     }
 
     private String getName() {
@@ -93,6 +118,11 @@ public class FindPwdActivity extends AppCompatActivity implements View.OnClickLi
                         txt_pwd.setText(user.getPassword());
                         txt_pwd.setVisibility(View.VISIBLE);
                         btn_find.setEnabled(false);
+                        boolean isFirstFind = PreferenceHelper.ins().getBooleanShareData(FIRSTFIND, true);
+                        if (isFirstFind) {
+                            PreferenceHelper.ins().storeBooleanShareData(FIRSTFIND, false);
+                            showTipsView.show(this);
+                        }
                     } else {
                         ToastUtil.showToast(R.string.nobody);
                     }

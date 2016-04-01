@@ -1,5 +1,6 @@
 package com.ypf.kuaicha.fragment;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -25,10 +28,12 @@ import com.ypf.kuaicha.dialog.LoadingDialog;
 import com.ypf.kuaicha.dialog.TipDialog;
 import com.ypf.kuaicha.http.GsonTools;
 import com.ypf.kuaicha.http.HttpHelper;
+import com.ypf.kuaicha.util.BitmapUtil;
 import com.ypf.kuaicha.util.DialogUtil;
 import com.ypf.kuaicha.util.GotoActivityUtil;
 import com.ypf.kuaicha.util.NetWorkStateUtil;
 import com.ypf.kuaicha.util.PreferenceHelper;
+import com.ypf.kuaicha.util.ShareUtil;
 import com.ypf.kuaicha.util.StringUtil;
 import com.ypf.kuaicha.util.ToastUtil;
 
@@ -49,6 +54,9 @@ public class RecordFragment extends Fragment implements AdapterView.OnItemClickL
     private List<Result> results = new ArrayList<>();
     private RecordAdapter adapter;
     private static boolean hasRegister = false;
+    private Button btn_share;
+    private ImageButton btn_back;
+    private String share_url = "http://www.wandoujia.com/apps/com.ypf.kuaicha";
 
     @Nullable
     @Override
@@ -58,25 +66,80 @@ public class RecordFragment extends Fragment implements AdapterView.OnItemClickL
             EventBus.getDefault().register(this);
             hasRegister = true;
         }
+        btn_back = (ImageButton) view.findViewById(R.id.ib_back);
+        btn_back.setVisibility(View.VISIBLE);
+        btn_share = (Button) view.findViewById(R.id.btn_sure);
+        btn_share.setText(StringUtil.getString(R.string.support));
+        btn_share.setVisibility(View.VISIBLE);
+        btn_share.setOnClickListener(new View.OnClickListener() {
+                                         @Override
+                                         public void onClick(View v) {
+                                             final Bitmap qrimage = BitmapUtil.createQRImage(share_url);
+                                             final TipDialog tipDialog = new TipDialog(getContext());
+                                             tipDialog.setContent(StringUtil.getString(R.string.support));
+                                             tipDialog.setTitle(StringUtil.getString(R.string.moreknow));
+                                             tipDialog.setLeftBtnText(StringUtil.getString(R.string.share));
+                                             tipDialog.setRightBtnText(StringUtil.getString(R.string.sharetofri));
+                                             tipDialog.show();
+                                             tipDialog.setOnBtnClickListener(new TipDialog.OnDialogBtnClickListener() {
+                                                 @Override
+                                                 public void onLeftBtnClicked(TipDialog dialog) {
+                                                     boolean toWXFriend = ShareUtil.shareToWXFriend(qrimage, 1);
+                                                     if (toWXFriend) {
+                                                         tipDialog.dismiss();
+                                                     } else {
+                                                         ToastUtil.showToast(R.string.sharefail);
+                                                         tipDialog.dismiss();
+                                                     }
+                                                 }
+
+                                                 @Override
+                                                 public void onRightBtnClicked(TipDialog dialog) {
+                                                     boolean toWXFriend = ShareUtil.shareToWXFriend(qrimage, 0);
+                                                     if (toWXFriend) {
+                                                         tipDialog.dismiss();
+                                                     } else {
+                                                         ToastUtil.showToast(R.string.sharefail);
+                                                         tipDialog.dismiss();
+                                                     }
+                                                 }
+                                             });
+                                         }
+
+                                     }
+
+        );
         defaultpic = view.findViewById(R.id.defaultpic);
         lv_record = (ListView) view.findViewById(R.id.lv_record);
         lv_record.setEmptyView(defaultpic);
         title = (TextView) view.findViewById(R.id.txt_title);
         title.setText(StringUtil.getString(R.string.record));
-        try {
+        try
+
+        {
             results = CompanyDao.findAll();
             LogUtil.d("results1 = " + results);
-        } catch (Exception e) {
+        } catch (
+                Exception e
+                )
+
+        {
             e.printStackTrace();
         }
-        if (results == null || results.size() < 0) {
 
-        } else {
+        if (results == null || results.size() < 0)
+
+        {
+
+        } else
+
+        {
             adapter = new RecordAdapter(results);
             lv_record.setAdapter(adapter);
         }
 
         setListener();
+
         LogUtil.d("记录");
         return view;
     }

@@ -27,3 +27,6 @@
 -keepclassmembers class * extends de.greenrobot.event.util.ThrowableFailureEvent {
     <init>(java.lang.Throwable);
 }
+-keep class com.tencent.mm.sdk.** {
+   *;
+}
