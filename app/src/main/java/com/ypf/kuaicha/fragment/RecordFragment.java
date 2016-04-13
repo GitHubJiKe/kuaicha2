@@ -30,15 +30,18 @@ import com.ypf.kuaicha.http.GsonTools;
 import com.ypf.kuaicha.http.HttpHelper;
 import com.ypf.kuaicha.util.BitmapUtil;
 import com.ypf.kuaicha.util.DialogUtil;
+import com.ypf.kuaicha.util.ForeTask;
 import com.ypf.kuaicha.util.GotoActivityUtil;
 import com.ypf.kuaicha.util.NetWorkStateUtil;
 import com.ypf.kuaicha.util.PreferenceHelper;
 import com.ypf.kuaicha.util.ShareUtil;
+import com.ypf.kuaicha.util.StorageConfig;
 import com.ypf.kuaicha.util.StringUtil;
 import com.ypf.kuaicha.util.ToastUtil;
 
 import org.xutils.common.util.LogUtil;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,36 +77,56 @@ public class RecordFragment extends Fragment implements AdapterView.OnItemClickL
         btn_share.setOnClickListener(new View.OnClickListener() {
                                          @Override
                                          public void onClick(View v) {
-                                             final Bitmap qrimage = BitmapUtil.createQRImage(share_url);
-                                             final TipDialog tipDialog = new TipDialog(getContext());
-                                             tipDialog.setContent(StringUtil.getString(R.string.support));
-                                             tipDialog.setTitle(StringUtil.getString(R.string.moreknow));
-                                             tipDialog.setLeftBtnText(StringUtil.getString(R.string.share));
-                                             tipDialog.setRightBtnText(StringUtil.getString(R.string.sharetofri));
-                                             tipDialog.show();
-                                             tipDialog.setOnBtnClickListener(new TipDialog.OnDialogBtnClickListener() {
-                                                 @Override
-                                                 public void onLeftBtnClicked(TipDialog dialog) {
-                                                     boolean toWXFriend = ShareUtil.shareToWXFriend(qrimage, 1);
-                                                     if (toWXFriend) {
-                                                         tipDialog.dismiss();
-                                                     } else {
-                                                         ToastUtil.showToast(R.string.sharefail);
-                                                         tipDialog.dismiss();
+                                             if (ShareUtil.isInstallWX()) {
+                                                 final Bitmap qrimage = BitmapUtil.createQRImage(share_url);
+                                                 final String qrImagePath = StorageConfig.defaultImagePath + File.separator + String.valueOf(System.currentTimeMillis())
+                                                         + "share.jpg";
+                                                 new ForeTask() {
+                                                     @Override
+                                                     protected void runInBackground() {
+                                                         Log.d("TAG", "mbitmap.size = " + qrimage.getByteCount());
+                                                         BitmapUtil.saveBitmapToDisk(qrImagePath, qrimage);
+                                                         BitmapUtil.insertImageToPhotoAlbum(getActivity(), qrImagePath);
                                                      }
-                                                 }
 
-                                                 @Override
-                                                 public void onRightBtnClicked(TipDialog dialog) {
-                                                     boolean toWXFriend = ShareUtil.shareToWXFriend(qrimage, 0);
-                                                     if (toWXFriend) {
-                                                         tipDialog.dismiss();
-                                                     } else {
-                                                         ToastUtil.showToast(R.string.sharefail);
-                                                         tipDialog.dismiss();
+                                                     @Override
+                                                     protected void runInForeground() {
+                                                         final TipDialog tipDialog = new TipDialog(getContext());
+                                                         tipDialog.setContent(StringUtil.getString(R.string.support));
+                                                         tipDialog.setTitle(StringUtil.getString(R.string.moreknow));
+                                                         tipDialog.setLeftBtnText(StringUtil.getString(R.string.share));
+                                                         tipDialog.setRightBtnText(StringUtil.getString(R.string.sharetofri));
+                                                         tipDialog.show();
+                                                         tipDialog.setOnBtnClickListener(new TipDialog.OnDialogBtnClickListener() {
+                                                             @Override
+                                                             public void onLeftBtnClicked(TipDialog dialog) {
+                                                                 boolean toWXFriend = ShareUtil.shareToWXFriend(qrImagePath, 1);
+                                                                 if (toWXFriend) {
+                                                                     tipDialog.dismiss();
+                                                                 } else {
+                                                                     ToastUtil.showToast(R.string.sharefail);
+                                                                     tipDialog.dismiss();
+                                                                 }
+                                                             }
+
+                                                             @Override
+                                                             public void onRightBtnClicked(TipDialog dialog) {
+                                                                 boolean toWXFriend = ShareUtil.shareToWXFriend(qrImagePath, 0);
+                                                                 if (toWXFriend) {
+                                                                     tipDialog.dismiss();
+                                                                 } else {
+                                                                     ToastUtil.showToast(R.string.sharefail);
+                                                                     tipDialog.dismiss();
+                                                                 }
+                                                             }
+                                                         });
                                                      }
-                                                 }
-                                             });
+                                                 }.execute();
+
+                                             } else {
+                                                 ToastUtil.showToast(R.string.noWX);
+                                             }
+
                                          }
 
                                      }

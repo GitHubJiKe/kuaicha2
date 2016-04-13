@@ -54,4 +54,5 @@
     <string name="tips">提示</string>
     <string name="know">知道了</string>
     <string name="support">支持一下</string>
+    <string name="noWX">您还没有安装微信</string>
 </resources>

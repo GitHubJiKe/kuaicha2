@@ -102,13 +102,18 @@ public class DetialActivity extends AppCompatActivity {
                         tipDialog.setOnBtnClickListener(new TipDialog.OnDialogBtnClickListener() {
                             @Override
                             public void onLeftBtnClicked(TipDialog dialog) {
-                                boolean toWXFriend = ShareUtil.shareToWXFriend(qrImagePath);
-                                if (toWXFriend) {
-                                    tipDialog.dismiss();
+                                if (ShareUtil.isInstallWX()) {
+                                    boolean toWXFriend = ShareUtil.shareToWXFriend(qrImagePath, 1);
+                                    if (toWXFriend) {
+                                        tipDialog.dismiss();
+                                    } else {
+                                        ToastUtil.showToast(R.string.sharefail);
+                                        tipDialog.dismiss();
+                                    }
                                 } else {
-                                    ToastUtil.showToast(R.string.sharefail);
-                                    tipDialog.dismiss();
+                                    ToastUtil.showToast(R.string.noWX);
                                 }
+
                             }
 
                             @Override

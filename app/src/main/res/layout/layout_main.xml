@@ -43,18 +43,5 @@
             android:text="@string/search"
             android:textColor="@color/white"
             android:textSize="20sp" />
-
-        <!--<RadioButton-->
-            <!--android:id="@+id/rb_post"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="1"-->
-            <!--android:background="@drawable/radio_selector"-->
-            <!--android:button="@null"-->
-            <!--android:gravity="center"-->
-            <!--android:onClick="doClick"-->
-            <!--android:text="@string/post"-->
-            <!--android:textColor="@color/white"-->
-            <!--android:textSize="20sp" />-->
     </RadioGroup>
 </RelativeLayout>
