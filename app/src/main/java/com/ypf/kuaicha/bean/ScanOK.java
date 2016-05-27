@@ -3,7 +3,7 @@ package com.ypf.kuaicha.bean;
 /**
  * Created by Administrator on 2016/3/2.
  */
-public class SaoMiaoOK {
+public class ScanOK {
     private boolean isSaoMiaoOK;
     private String result;
 
