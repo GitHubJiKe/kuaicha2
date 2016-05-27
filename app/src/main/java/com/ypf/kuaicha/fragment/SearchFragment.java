@@ -25,7 +25,7 @@ import com.ypf.kuaicha.bean.DetialInfo;
 import com.ypf.kuaicha.bean.NetWorkState;
 import com.ypf.kuaicha.bean.Result;
 import com.ypf.kuaicha.bean.ResultRoot;
-import com.ypf.kuaicha.bean.SaoMiaoOK;
+import com.ypf.kuaicha.bean.ScanOK;
 import com.ypf.kuaicha.dialog.LoadingDialog;
 import com.ypf.kuaicha.http.GsonTools;
 import com.ypf.kuaicha.http.HttpHelper;
@@ -240,11 +240,11 @@ public class SearchFragment extends Fragment implements TextWatcher, CheckInput,
         }
     }
 
-    public void onEventMainThread(SaoMiaoOK saoMiaoOK) {
-        Log.d("TAG", "接受扫面结果= " + saoMiaoOK);
-        if (saoMiaoOK != null) {
-            if (saoMiaoOK.isSaoMiaoOK()) {
-                number = saoMiaoOK.getResult().toString();
+    public void onEventMainThread(ScanOK scanOK) {
+        Log.d("TAG", "接受扫面结果= " + scanOK);
+        if (scanOK != null) {
+            if (scanOK.isSaoMiaoOK()) {
+                number = scanOK.getResult().toString();
                 Log.d("TAG", "number1=" + number);
             }
 
