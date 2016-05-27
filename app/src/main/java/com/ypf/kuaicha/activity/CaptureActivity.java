@@ -20,7 +20,7 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
 import com.ypf.kuaicha.R;
 import com.ypf.kuaicha.TApplication;
-import com.ypf.kuaicha.bean.SaoMiaoOK;
+import com.ypf.kuaicha.bean.ScanOK;
 import com.ypf.kuaicha.camera.CameraManager;
 import com.ypf.kuaicha.decoding.CaptureActivityHandler;
 import com.ypf.kuaicha.decoding.InactivityTimer;
@@ -153,10 +153,10 @@ public class CaptureActivity extends Activity implements Callback {
         inactivityTimer.onActivity();
         playBeepSoundAndVibrate();
         if (obj != null) {
-            SaoMiaoOK saoMiaoOK = new SaoMiaoOK();
-            saoMiaoOK.setSaoMiaoOK(true);
-            saoMiaoOK.setResult(obj.getText());
-            EventBus.getDefault().post(saoMiaoOK);
+            ScanOK scanOK = new ScanOK();
+            scanOK.setSaoMiaoOK(true);
+            scanOK.setResult(obj.getText());
+            EventBus.getDefault().post(scanOK);
             Log.d("TAG","扫描成功");
         }
         finish();
